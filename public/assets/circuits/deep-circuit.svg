@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 420" role="img" aria-label="Deep layered quantum circuit">
+  <rect width="720" height="420" rx="28" fill="#081421"/>
+  <text x="34" y="44" fill="#edf5ff" font-family="Space Grotesk, sans-serif" font-size="24">Stacked parameterized circuit</text>
+  <text x="34" y="68" fill="#9bb0c5" font-family="IBM Plex Mono, monospace" font-size="13">a more layered view of repeated gate blocks and entangling structure</text>
+  <g stroke="rgba(255,255,255,0.22)" stroke-width="3">
+    <line x1="116" y1="112" x2="662" y2="112"/>
+    <line x1="116" y1="172" x2="662" y2="172"/>
+    <line x1="116" y1="232" x2="662" y2="232"/>
+    <line x1="116" y1="292" x2="662" y2="292"/>
+  </g>
+  <g font-family="IBM Plex Mono, monospace" font-size="14" fill="#9bb0c5">
+    <text x="42" y="117">q0</text>
+    <text x="42" y="177">q1</text>
+    <text x="42" y="237">q2</text>
+    <text x="42" y="297">r</text>
+  </g>
+  <g font-family="IBM Plex Mono, monospace" font-size="13">
+    <g>
+      <rect x="150" y="90" width="54" height="44" rx="12" fill="rgba(120,233,255,0.1)" stroke="#78e9ff"/>
+      <rect x="150" y="150" width="54" height="44" rx="12" fill="rgba(109,224,187,0.1)" stroke="#6de0bb"/>
+      <rect x="150" y="210" width="54" height="44" rx="12" fill="rgba(255,211,107,0.1)" stroke="#ffd36b"/>
+      <rect x="150" y="270" width="54" height="44" rx="12" fill="rgba(255,149,166,0.1)" stroke="#ff95a6"/>
+      <text x="177" y="118" text-anchor="middle" fill="#78e9ff">R1</text>
+      <text x="177" y="178" text-anchor="middle" fill="#6de0bb">R2</text>
+      <text x="177" y="238" text-anchor="middle" fill="#ffd36b">R3</text>
+      <text x="177" y="298" text-anchor="middle" fill="#ff95a6">B1</text>
+    </g>
+    <g>
+      <line x1="272" y1="112" x2="272" y2="292" stroke="#78e9ff" stroke-width="3" stroke-dasharray="5 7"/>
+      <circle cx="272" cy="112" r="7" fill="#78e9ff"/>
+      <circle cx="272" cy="172" r="7" fill="#78e9ff"/>
+      <circle cx="272" cy="232" r="7" fill="#78e9ff"/>
+      <circle cx="272" cy="292" r="7" fill="#78e9ff"/>
+    </g>
+    <g>
+      <rect x="322" y="90" width="54" height="44" rx="12" fill="rgba(120,233,255,0.1)" stroke="#78e9ff"/>
+      <rect x="322" y="150" width="54" height="44" rx="12" fill="rgba(109,224,187,0.1)" stroke="#6de0bb"/>
+      <rect x="322" y="210" width="54" height="44" rx="12" fill="rgba(255,211,107,0.1)" stroke="#ffd36b"/>
+      <rect x="322" y="270" width="54" height="44" rx="12" fill="rgba(255,149,166,0.1)" stroke="#ff95a6"/>
+      <text x="349" y="118" text-anchor="middle" fill="#78e9ff">R4</text>
+      <text x="349" y="178" text-anchor="middle" fill="#6de0bb">R5</text>
+      <text x="349" y="238" text-anchor="middle" fill="#ffd36b">R6</text>
+      <text x="349" y="298" text-anchor="middle" fill="#ff95a6">B2</text>
+    </g>
+    <g>
+      <line x1="448" y1="112" x2="448" y2="292" stroke="#6de0bb" stroke-width="3" stroke-dasharray="5 7"/>
+      <circle cx="448" cy="112" r="7" fill="#6de0bb"/>
+      <circle cx="448" cy="172" r="7" fill="#6de0bb"/>
+      <circle cx="448" cy="232" r="7" fill="#6de0bb"/>
+      <circle cx="448" cy="292" r="7" fill="#6de0bb"/>
+    </g>
+    <g>
+      <rect x="500" y="90" width="84" height="44" rx="14" fill="rgba(120,233,255,0.1)" stroke="#78e9ff"/>
+      <rect x="500" y="270" width="84" height="44" rx="14" fill="rgba(255,149,166,0.1)" stroke="#ff95a6"/>
+      <text x="542" y="118" text-anchor="middle" fill="#78e9ff">U final</text>
+      <text x="542" y="298" text-anchor="middle" fill="#ff95a6">measure</text>
+    </g>
+  </g>
+</svg>

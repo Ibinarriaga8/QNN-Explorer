@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 420" role="img" aria-label="Readout qubit focused circuit">
+  <rect width="720" height="420" rx="28" fill="#081421"/>
+  <text x="34" y="44" fill="#edf5ff" font-family="Space Grotesk, sans-serif" font-size="24">Readout qubit focus</text>
+  <text x="34" y="68" fill="#9bb0c5" font-family="IBM Plex Mono, monospace" font-size="13">the final label comes from one designated qubit after the circuit evolution</text>
+  <g stroke="rgba(255,255,255,0.22)" stroke-width="3">
+    <line x1="136" y1="132" x2="646" y2="132"/>
+    <line x1="136" y1="192" x2="646" y2="192"/>
+    <line x1="136" y1="252" x2="646" y2="252"/>
+    <line x1="136" y1="312" x2="646" y2="312"/>
+  </g>
+  <g font-family="IBM Plex Mono, monospace" font-size="14" fill="#9bb0c5">
+    <text x="52" y="137">data q0</text>
+    <text x="52" y="197">data q1</text>
+    <text x="52" y="257">data q2</text>
+    <text x="44" y="317" fill="#ff95a6">readout q</text>
+  </g>
+  <g>
+    <rect x="194" y="110" width="82" height="44" rx="14" fill="rgba(120,233,255,0.1)" stroke="#78e9ff"/>
+    <rect x="312" y="110" width="82" height="44" rx="14" fill="rgba(109,224,187,0.1)" stroke="#6de0bb"/>
+    <rect x="430" y="110" width="82" height="44" rx="14" fill="rgba(255,211,107,0.1)" stroke="#ffd36b"/>
+    <text x="235" y="138" text-anchor="middle" fill="#78e9ff" font-family="IBM Plex Mono, monospace" font-size="14">encode</text>
+    <text x="353" y="138" text-anchor="middle" fill="#6de0bb" font-family="IBM Plex Mono, monospace" font-size="14">mix</text>
+    <text x="471" y="138" text-anchor="middle" fill="#ffd36b" font-family="IBM Plex Mono, monospace" font-size="14">entangle</text>
+  </g>
+  <g>
+    <line x1="548" y1="312" x2="620" y2="312" stroke="#ff95a6" stroke-width="4"/>
+    <path d="M620 312 l-14 -14 M620 312 l-14 14" stroke="#ff95a6" stroke-width="4" fill="none"/>
+    <rect x="442" y="290" width="74" height="44" rx="14" fill="rgba(255,149,166,0.12)" stroke="#ff95a6"/>
+    <text x="479" y="318" text-anchor="middle" fill="#ff95a6" font-family="IBM Plex Mono, monospace" font-size="14">Y readout</text>
+  </g>
+  <g>
+    <rect x="194" y="268" width="56" height="88" rx="18" fill="rgba(255,149,166,0.08)" stroke="#ff95a6" stroke-dasharray="6 8"/>
+    <text x="222" y="292" text-anchor="middle" fill="#ff95a6" font-family="IBM Plex Mono, monospace" font-size="12">special</text>
+    <text x="222" y="310" text-anchor="middle" fill="#ff95a6" font-family="IBM Plex Mono, monospace" font-size="12">qubit</text>
+    <text x="222" y="328" text-anchor="middle" fill="#ff95a6" font-family="IBM Plex Mono, monospace" font-size="12">stores</text>
+    <text x="222" y="346" text-anchor="middle" fill="#ff95a6" font-family="IBM Plex Mono, monospace" font-size="12">label bias</text>
+  </g>
+</svg>

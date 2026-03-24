@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 420" role="img" aria-label="Overview circuit graphic">
+  <defs>
+    <linearGradient id="heroBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0a1626"/>
+      <stop offset="100%" stop-color="#0d2239"/>
+    </linearGradient>
+  </defs>
+  <rect width="720" height="420" rx="28" fill="url(#heroBg)"/>
+  <circle cx="618" cy="88" r="90" fill="rgba(120,233,255,0.08)"/>
+  <text x="42" y="48" fill="#edf5ff" font-family="Space Grotesk, sans-serif" font-size="24">Quantum Neural Network Explorer</text>
+  <text x="42" y="76" fill="#9bb0c5" font-family="IBM Plex Mono, monospace" font-size="13">input state -> unitary U(theta) -> readout qubit</text>
+  <g stroke="rgba(255,255,255,0.24)" stroke-width="3">
+    <line x1="128" y1="136" x2="612" y2="136"/>
+    <line x1="128" y1="196" x2="612" y2="196"/>
+    <line x1="128" y1="256" x2="612" y2="256"/>
+    <line x1="128" y1="316" x2="612" y2="316"/>
+  </g>
+  <g font-family="IBM Plex Mono, monospace" font-size="14" fill="#9bb0c5">
+    <text x="46" y="141">q0 |z1&gt;</text>
+    <text x="46" y="201">q1 |z2&gt;</text>
+    <text x="46" y="261">q2 |z3&gt;</text>
+    <text x="46" y="321">r |1&gt;</text>
+  </g>
+  <g>
+    <rect x="168" y="114" width="80" height="44" rx="16" fill="rgba(120,233,255,0.1)" stroke="#78e9ff"/>
+    <rect x="168" y="174" width="80" height="44" rx="16" fill="rgba(109,224,187,0.1)" stroke="#6de0bb"/>
+    <rect x="168" y="234" width="80" height="44" rx="16" fill="rgba(255,211,107,0.1)" stroke="#ffd36b"/>
+    <rect x="168" y="294" width="80" height="44" rx="16" fill="rgba(255,149,166,0.1)" stroke="#ff95a6"/>
+    <text x="208" y="141" text-anchor="middle" fill="#78e9ff" font-family="IBM Plex Mono, monospace" font-size="14">encode</text>
+    <text x="208" y="201" text-anchor="middle" fill="#6de0bb" font-family="IBM Plex Mono, monospace" font-size="14">rotate</text>
+    <text x="208" y="261" text-anchor="middle" fill="#ffd36b" font-family="IBM Plex Mono, monospace" font-size="14">mix</text>
+    <text x="208" y="321" text-anchor="middle" fill="#ff95a6" font-family="IBM Plex Mono, monospace" font-size="14">bias</text>
+  </g>
+  <g>
+    <line x1="334" y1="136" x2="334" y2="316" stroke="#78e9ff" stroke-width="3" stroke-dasharray="6 8"/>
+    <circle cx="334" cy="136" r="8" fill="#78e9ff"/>
+    <circle cx="334" cy="196" r="8" fill="#78e9ff"/>
+    <circle cx="334" cy="256" r="8" fill="#78e9ff"/>
+    <circle cx="334" cy="316" r="8" fill="#78e9ff"/>
+  </g>
+  <g>
+    <rect x="402" y="110" width="138" height="232" rx="24" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.12)"/>
+    <text x="471" y="146" text-anchor="middle" fill="#edf5ff" font-family="Space Grotesk, sans-serif" font-size="22">U(theta)</text>
+    <text x="471" y="176" text-anchor="middle" fill="#9bb0c5" font-family="IBM Plex Mono, monospace" font-size="13">trainable quantum unitary</text>
+    <text x="471" y="242" text-anchor="middle" fill="#78e9ff" font-family="IBM Plex Mono, monospace" font-size="14">learned transformation</text>
+    <text x="471" y="274" text-anchor="middle" fill="#ffd36b" font-family="IBM Plex Mono, monospace" font-size="14">changes amplitudes</text>
+    <text x="471" y="306" text-anchor="middle" fill="#ff95a6" font-family="IBM Plex Mono, monospace" font-size="14">moves readout bias</text>
+  </g>
+  <g>
+    <line x1="582" y1="316" x2="636" y2="316" stroke="#ff95a6" stroke-width="4"/>
+    <path d="M636 316 l-14 -14 M636 316 l-14 14" stroke="#ff95a6" stroke-width="4" fill="none"/>
+    <text x="616" y="292" text-anchor="middle" fill="#edf5ff" font-family="IBM Plex Mono, monospace" font-size="13">measure</text>
+  </g>
+</svg>

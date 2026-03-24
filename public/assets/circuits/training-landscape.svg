@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 420" role="img" aria-label="Optimization landscape">
+  <defs>
+    <linearGradient id="landA" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0a1626"/>
+      <stop offset="100%" stop-color="#0e2139"/>
+    </linearGradient>
+  </defs>
+  <rect width="720" height="420" rx="28" fill="url(#landA)"/>
+  <text x="34" y="44" fill="#edf5ff" font-family="Space Grotesk, sans-serif" font-size="24">Optimization landscape intuition</text>
+  <text x="34" y="68" fill="#9bb0c5" font-family="IBM Plex Mono, monospace" font-size="13">steep informative regions help training, flat regions slow it down</text>
+  <path d="M30 290 C120 170, 176 334, 270 246 S442 126, 524 228 S616 312, 692 190" fill="none" stroke="rgba(255,255,255,0.14)" stroke-width="26" stroke-linecap="round"/>
+  <path d="M30 290 C120 170, 176 334, 270 246 S442 126, 524 228 S616 312, 692 190" fill="none" stroke="#78e9ff" stroke-width="4" stroke-linecap="round"/>
+  <circle cx="304" cy="232" r="12" fill="#ffd36b"/>
+  <circle cx="588" cy="272" r="12" fill="#ff95a6"/>
+  <text x="250" y="208" fill="#ffd36b" font-family="IBM Plex Mono, monospace" font-size="13">good descent direction</text>
+  <text x="506" y="304" fill="#ff95a6" font-family="IBM Plex Mono, monospace" font-size="13">flat region, weak gradient</text>
+  <g stroke="rgba(255,255,255,0.08)">
+    <line x1="60" y1="340" x2="680" y2="340"/>
+    <line x1="60" y1="110" x2="60" y2="340"/>
+  </g>
+  <text x="64" y="103" fill="#9bb0c5" font-family="IBM Plex Mono, monospace" font-size="12">higher loss</text>
+  <text x="604" y="363" fill="#9bb0c5" font-family="IBM Plex Mono, monospace" font-size="12">parameter space</text>
+</svg>
