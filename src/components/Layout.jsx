@@ -12,7 +12,7 @@ export function Layout() {
             </div>
             <div>
               <div>Quantum Neural Networks Explorer</div>
-              <div className="mono-label">Farhi &amp; Neven interactive studio</div>
+              <div className="mono-label">Farhi &amp; Neven circuit + training lab</div>
             </div>
           </NavLink>
           <nav className="nav-links">

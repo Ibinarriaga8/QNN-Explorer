@@ -1,10 +1,10 @@
 export const navItems = [
   { to: "/", label: "Home" },
   { to: "/basics", label: "Basics" },
-  { to: "/circuits", label: "Circuits" },
-  { to: "/lab", label: "QNN Lab" },
+  { to: "/circuits", label: "Circuit" },
+  { to: "/lab", label: "QNN Studio" },
   { to: "/training", label: "Training" },
-  { to: "/examples", label: "Examples" },
+  { to: "/examples", label: "Tasks" },
   { to: "/insights", label: "Insights" },
 ];
 
@@ -16,33 +16,33 @@ export const lessonCards = [
     to: "/basics",
   },
   {
-    eyebrow: "2. Circuits",
-    title: "Study paper-style circuit diagrams.",
-    text: "See multiple circuit images that explain the classifier structure visually.",
+    eyebrow: "2. Circuit",
+    title: "Walk through the QNN gate by gate.",
+    text: "An interactive circuit explorer replaces the old static SVG gallery.",
     to: "/circuits",
   },
   {
-    eyebrow: "3. QNN Lab",
-    title: "Manipulate parameters and readout behavior.",
-    text: "Choose inputs, move sliders, and inspect a live circuit and prediction dashboard.",
+    eyebrow: "3. QNN Studio",
+    title: "Tune thetas and connect them to prediction.",
+    text: "Move the trainable angles, inspect exact gradients, and see the readout respond live.",
     to: "/lab",
   },
   {
     eyebrow: "4. Training",
-    title: "Watch loss change and explore optimization.",
-    text: "Animated loss plus optimization visuals connect intuition to the paper.",
+    title: "Follow parameter-shift updates during learning.",
+    text: "See stochastic gradient descent, loss curves, and theta updates as the QNN trains.",
     to: "/training",
   },
   {
-    eyebrow: "5. Examples",
+    eyebrow: "5. Tasks",
     title: "Compare parity and majority.",
-    text: "Interactive comparisons show why some tasks are easier to learn than others.",
+    text: "Interactive comparisons show why representation and optimization difficulty are different.",
     to: "/examples",
   },
   {
     eyebrow: "6. Insights",
-    title: "Close with the paper's big lessons.",
-    text: "Summarizes what worked, what struggled, and why the field is still open.",
+    title: "Close with the paper's real takeaways.",
+    text: "Summarizes what the QNN can express, what is hard to train, and where the open questions remain.",
     to: "/insights",
   },
 ];
@@ -128,15 +128,57 @@ export const exampleData = {
 
 export const insights = [
   {
-    title: "Trainable circuits are real learning models",
-    text: "The paper shows that a quantum circuit with adjustable parameters can play the role of a classifier, not just a fixed physics experiment.",
+    title: "Representation and trainability are different questions",
+    text: "The paper shows that quantum circuits can represent rich Boolean label functions, but finding the right parameters is still an optimization problem with its own bottlenecks.",
   },
   {
-    title: "Readout design matters",
-    text: "Using a dedicated readout qubit makes the output interpretable: the model has a clear place to look when turning a quantum state into a class label.",
+    title: "A dedicated readout qubit makes the model legible",
+    text: "By measuring one observable on one chosen qubit, the circuit turns a complex many-qubit state into a classifier output that can be trained against labels.",
   },
   {
-    title: "Optimization is the bottleneck",
-    text: "Some tasks are limited less by expressiveness and more by whether gradients remain useful during training.",
+    title: "The paper is exploratory, not a proof of quantum advantage",
+    text: "Farhi and Neven demonstrate a workable supervised-learning framework on near-term style circuits, but they do not claim a clear classical advantage at the small sizes they simulate.",
+  },
+];
+
+export const qnnBenefits = [
+  {
+    title: "Native access to quantum data",
+    classical: "A classical network needs a compact classical description of the input.",
+    quantum:
+      "A QNN can take a quantum state directly as input, so it can be applied even when the state has no efficient classical description.",
+  },
+  {
+    title: "Works inside exponential Hilbert space",
+    classical: "Classical models act on explicit vectors whose size grows with the chosen encoding.",
+    quantum:
+      "An n-qubit device naturally evolves states in a 2^n-dimensional space, which may let a compact circuit manipulate patterns that are expensive to track classically.",
+  },
+  {
+    title: "Gate set can match the hardware",
+    classical: "Classical architectures are abstract software objects and do not benefit from quantum device structure.",
+    quantum:
+      "The paper's framework is designed for near-term processors: pick trainable one- and two-qubit gates that the hardware can actually implement and learn within that gate set.",
+  },
+  {
+    title: "Hybrid pipelines are possible",
+    classical: "A fully classical network must carry the whole task alone.",
+    quantum:
+      "Farhi and Neven explicitly point to hybrid architectures where classical layers compress ordinary data first and a smaller QNN handles the final decision stage.",
+  },
+];
+
+export const qnnCaveats = [
+  {
+    title: "Not automatically better on ordinary classical data",
+    text: "For small classical datasets like downsampled MNIST, classical networks remain strong baselines. The paper treats the QNN as a proof of principle, not a demonstrated replacement.",
+  },
+  {
+    title: "Trainability can still be hard",
+    text: "Some functions may be representable but still difficult to learn because gradients become uninformative or useful solutions occupy a tiny region of parameter space.",
+  },
+  {
+    title: "The clearest advantage case is quantum input",
+    text: "The strongest argument for usefulness comes when the data is itself quantum. In that regime a classical competitor may not even be able to read the full input efficiently.",
   },
 ];

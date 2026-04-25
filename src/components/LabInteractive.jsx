@@ -1,153 +1,195 @@
 import { useMemo, useState } from "react";
-import { labSamples, sliders } from "../data/content";
-import { renderDynamicCircuit, renderLandscape } from "./CircuitViews";
-
-function computePrediction(sample, params) {
-  const bits = sample.split("").map(Number);
-  const ones = bits.reduce((sum, bit) => sum + bit, 0);
-  const score =
-    Math.sin(params.theta1 + bits[0] * 0.8) * 0.92 +
-    Math.cos(params.theta2 + ones * 0.52) * 0.75 +
-    Math.sin(params.theta3 + bits[2] * 1.18) * 0.55;
-  const positive = 1 / (1 + Math.exp(-score));
-  return { score, positive, negative: 1 - positive };
-}
+import { InteractiveCircuit } from "./InteractiveCircuit";
+import { MathDisplay, MathInline } from "./MathText";
+import {
+  DEFAULT_THETAS,
+  THETA_METADATA,
+  createThetaMap,
+  gradientForSample,
+  labelForSample,
+  lossForSample,
+  predictExpectation,
+  probabilityPlus,
+  shiftedLosses,
+} from "../lib/qnnMath";
 
 export function LabInteractive() {
-  const [sample, setSample] = useState(labSamples[0]);
-  const [params, setParams] = useState(
-    Object.fromEntries(sliders.map((slider) => [slider.id, slider.value])),
-  );
+  const [sample, setSample] = useState("1011");
+  const [task, setTask] = useState("majority");
+  const [thetas, setThetas] = useState(() => createThetaMap(DEFAULT_THETAS));
+  const [selectedThetaIndex, setSelectedThetaIndex] = useState(0);
 
-  const prediction = useMemo(() => computePrediction(sample, params), [sample, params]);
-  const positivePercent = Math.round(prediction.positive * 100);
-  const negativePercent = 100 - positivePercent;
-  const label = prediction.positive >= 0.5 ? "+1" : "-1";
-  const bits = sample.split("");
+  const expectation = useMemo(() => predictExpectation(sample, thetas), [sample, thetas]);
+  const probability = probabilityPlus(expectation);
+  const gradients = useMemo(() => gradientForSample(sample, thetas, task), [sample, task, thetas]);
+  const shifted = useMemo(() => shiftedLosses(sample, thetas, task, selectedThetaIndex), [sample, selectedThetaIndex, task, thetas]);
+  const selectedTheta = THETA_METADATA[selectedThetaIndex];
+  const target = labelForSample(sample, task);
+  const loss = lossForSample(sample, thetas, task);
+  const gradMax = Math.max(...gradients.map((value) => Math.abs(value)), 0.001);
 
-  function updateSlider(id, value) {
-    setParams((current) => ({ ...current, [id]: Number(value) }));
+  function updateTheta(id, value) {
+    setThetas((current) => ({ ...current, [id]: Number(value) }));
+  }
+
+  function resetThetas() {
+    setThetas(createThetaMap(DEFAULT_THETAS));
   }
 
   return (
-    <div className="lab-grid">
+    <div className="lab-studio">
       <article className="panel">
         <div className="panel-header">
           <div>
-            <div className="mono-label">Controls</div>
-            <h3>Choose input and tune the circuit</h3>
+            <div className="mono-label">Trainable angles</div>
+            <h3>θ values are the knobs the optimizer learns.</h3>
           </div>
         </div>
-        <div className="sample-switcher">
-          {labSamples.map((item) => (
-            <button
-              key={item}
-              className={`sample-button${sample === item ? " active" : ""}`}
-              onClick={() => setSample(item)}
-              type="button"
-            >
-              {item}
-            </button>
-          ))}
+
+        <div className="info-card accent">
+          <strong>What a theta means</strong>
+          Each <MathInline math={"\\theta_k"} /> sets the strength of one gate in the circuit. Training does not change the circuit
+          topology; it only changes these angles until the readout qubit responds correctly to the dataset.
         </div>
-        <div className="slider-group">
-          {sliders.map((slider) => (
-            <div className="slider-row" key={slider.id}>
-              <label htmlFor={slider.id}>
-                <span>{slider.label}</span>
-                <span>{params[slider.id].toFixed(2)}</span>
-              </label>
-              <input
-                id={slider.id}
-                type="range"
-                min={slider.min}
-                max={slider.max}
-                step={slider.step}
-                value={params[slider.id]}
-                onChange={(event) => updateSlider(slider.id, event.target.value)}
-              />
+
+        <div className="slider-cluster">
+          {["ZX", "XX"].map((layer) => (
+            <div key={layer}>
+              <div className="slider-cluster-title">{layer} layer</div>
+              <div className="slider-group">
+                {THETA_METADATA.filter((item) => item.layer === layer).map((item) => (
+                  <div className="slider-row" key={item.id}>
+                    <label htmlFor={item.id}>
+                      <span>{item.symbol}</span>
+                      <span>{thetas[item.id].toFixed(2)}</span>
+                    </label>
+                    <input
+                      id={item.id}
+                      type="range"
+                      min="-3.14"
+                      max="3.14"
+                      step="0.01"
+                      value={thetas[item.id]}
+                      onChange={(event) => updateTheta(item.id, event.target.value)}
+                    />
+                    <div className="slider-helper">
+                      <MathInline math={item.operatorLatex} />
+                    </div>
+                  </div>
+                ))}
+              </div>
             </div>
           ))}
         </div>
-        <div className="info-card">
-          <strong>Interpretation</strong>
-          The sliders represent trainable parameters, like the learnable knobs the optimizer would adjust during training.
+
+        <div className="training-buttons">
+          <button className="button secondary" onClick={resetThetas} type="button">
+            Reset to paper-style seed
+          </button>
         </div>
+      </article>
+
+      <article className="panel lab-circuit-panel">
+        <div className="panel-header">
+          <div>
+            <div className="mono-label">Circuit walkthrough</div>
+            <h3>Step through the classifier and watch the readout build its answer.</h3>
+          </div>
+        </div>
+        <InteractiveCircuit
+          sample={sample}
+          task={task}
+          thetas={thetas}
+          onSampleChange={setSample}
+          onTaskChange={setTask}
+          focusThetaIndex={selectedThetaIndex}
+          onFocusThetaChange={setSelectedThetaIndex}
+        />
       </article>
 
       <article className="panel">
         <div className="panel-header">
           <div>
-            <div className="mono-label">Live circuit view</div>
-            <h3>See the paper-style circuit update.</h3>
+            <div className="mono-label">Prediction and gradients</div>
+            <h3>Connect the circuit output to the learning signal.</h3>
           </div>
         </div>
-        <div dangerouslySetInnerHTML={{ __html: renderDynamicCircuit(sample, params) }} />
-        <div className="mini-grid">
-          <div className="info-card">
-            <strong>Input encoding</strong>
-            Bits {bits.join(" ")} are loaded as the starting pattern on data qubits.
-          </div>
-          <div className="info-card">
-            <strong>Unitary mixing</strong>
-            Gates U(theta) blend the input with trainable rotations and entangling structure.
-          </div>
-          <div className="info-card">
-            <strong>Readout</strong>
-            The final readout qubit carries a class bias of {(prediction.positive * 100).toFixed(0)}% toward +1.
-          </div>
-        </div>
-      </article>
 
-      <article className="panel">
-        <div className="panel-header">
-          <div>
-            <div className="mono-label">Prediction dashboard</div>
-            <h3>Readout qubit and classification</h3>
-          </div>
-        </div>
         <div className="prediction-card">
-          <div className="prediction-label">{label}</div>
+          <div className="prediction-label">{expectation >= 0 ? "+1" : "-1"}</div>
           <p>
-            {label === "+1"
-              ? "The current circuit is more likely to produce class +1 because the readout qubit is biased toward 1."
-              : "The current circuit is more likely to produce class -1 because the readout qubit is biased toward the opposite label."}
+            The readout qubit currently predicts <MathInline math={`\\hat y=${expectation.toFixed(3)}`} />. For task <code>{task}</code>, sample{" "}
+            <code>{sample}</code> should be labeled <code>{target > 0 ? "+1" : "-1"}</code>.
           </p>
         </div>
+
         <div className="meter-card">
           <div className="meter-header">
-            <span className="mono-label">Readout meter</span>
-            <span>{prediction.positive.toFixed(2)}</span>
+            <span className="mono-label">P(+1)</span>
+            <span>{(probability * 100).toFixed(1)}%</span>
           </div>
           <div className="meter-track">
-            <div className="meter-fill" style={{ width: `${positivePercent}%` }} />
+            <div className="meter-fill" style={{ width: `${probability * 100}%` }} />
           </div>
         </div>
-        <div className="chart-card">
-          <div className="mono-label">Probability bars</div>
-          <div className="bar-row">
-            <span>P(+1)</span>
-            <div className="bar-track">
-              <div className="bar-fill cyan" style={{ width: `${positivePercent}%` }} />
-            </div>
-            <span>{positivePercent}%</span>
-          </div>
-          <div className="bar-row">
-            <span>P(-1)</span>
-            <div className="bar-track">
-              <div className="bar-fill rose" style={{ width: `${negativePercent}%` }} />
-            </div>
-            <span>{negativePercent}%</span>
-          </div>
+
+        <div className="loss-row">
+          <span className="lbl">Sample loss</span>
+          <span className="val">{loss.toFixed(3)}</span>
         </div>
-        <div className="chart-card">
-          <div className="mono-label">Decision landscape</div>
-          <svg
-            id="landscape-plot"
-            viewBox="0 0 320 180"
-            aria-label="Decision landscape plot"
-            dangerouslySetInnerHTML={{ __html: renderLandscape(prediction.positive) }}
-          />
+
+        <div className="info-card accent">
+          <strong>Selected parameter: {selectedTheta.symbol}</strong>
+          {selectedTheta.summary}
+          <div className="formula-block">
+            <MathDisplay math={selectedTheta.operatorLatex} />
+          </div>
+          <div className="shift-grid">
+            <div className="metric-card">
+              <div className="mono-label">
+                <MathInline math={"L(\\theta-\\pi/2)"} />
+              </div>
+              <span className="value">{shifted.minus.toFixed(3)}</span>
+            </div>
+            <div className="metric-card">
+              <div className="mono-label">
+                <MathInline math={"L(\\theta)"} />
+              </div>
+              <span className="value">{shifted.current.toFixed(3)}</span>
+            </div>
+            <div className="metric-card">
+              <div className="mono-label">
+                <MathInline math={"L(\\theta+\\pi/2)"} />
+              </div>
+              <span className="value">{shifted.plus.toFixed(3)}</span>
+            </div>
+          </div>
+          <p className="theta-footnote">
+            Parameter-shift gradient:{" "}
+            <MathInline
+              math={`\\frac{\\partial L}{\\partial ${selectedTheta.symbolLatex}}=${gradients[selectedThetaIndex].toFixed(4)}`}
+            />
+            . If this value is positive, gradient descent will reduce {selectedTheta.symbol}; if it is negative, learning will
+            increase it.
+          </p>
+        </div>
+
+        <div className="grad-bars">
+          {THETA_METADATA.map((item, index) => {
+            const gradient = gradients[index];
+            const width = `${(Math.abs(gradient) / gradMax) * 50}%`;
+
+            return (
+              <div className="grad-bar-row" key={item.id}>
+                <div className="lbl">{item.symbol}</div>
+                <div className="bar-track">
+                  <div className="bar-center" />
+                  <div className={`bar-fill ${gradient >= 0 ? "pos" : "neg"}`} style={{ width }} />
+                </div>
+                <div className="val">{gradient.toFixed(3)}</div>
+              </div>
+            );
+          })}
         </div>
       </article>
     </div>

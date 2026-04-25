@@ -6,9 +6,9 @@ export function ExamplesPage() {
     <section className="page-hero">
       <div className="container">
         <PageIntro
-          eyebrow="Examples"
-          title="Compare parity and majority through an interactive explanation."
-          text="This page isolates one of the paper's most important teaching moments: some tasks are simply much easier to optimize than others."
+          eyebrow="Task Geometry"
+          title="Compare why majority trains smoothly while parity resists learning."
+          text="The paper’s lesson is not only that QNNs can represent functions, but that some functions are much friendlier to optimization. This page highlights that gap."
         />
         <ExamplesInteractive />
       </div>
