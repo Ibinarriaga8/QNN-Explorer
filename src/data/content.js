@@ -1,10 +1,15 @@
+// src/data/content.js  — replace existing file entirely
+
 export const navItems = [
   { to: "/", label: "Home" },
   { to: "/basics", label: "Basics" },
   { to: "/circuits", label: "Circuit" },
+  { to: "/representation", label: "Representation" },
+  { to: "/gradient", label: "Gradients" },
   { to: "/lab", label: "QNN Studio" },
   { to: "/training", label: "Training" },
   { to: "/examples", label: "Tasks" },
+  { to: "/quantum-inputs", label: "Quantum Inputs" },
   { to: "/insights", label: "Insights" },
 ];
 
@@ -18,29 +23,47 @@ export const lessonCards = [
   {
     eyebrow: "2. Circuit",
     title: "Walk through the QNN gate by gate.",
-    text: "An interactive circuit explorer replaces the old static SVG gallery.",
+    text: "An interactive circuit explorer shows how ZX and XX gates build the classifier signal in the readout qubit.",
     to: "/circuits",
   },
   {
-    eyebrow: "3. QNN Studio",
+    eyebrow: "3. Representation",
+    title: "Any Boolean function fits a circuit — but at what depth?",
+    text: "Explore the Reed-Muller expansion that underpins the paper's representation theorem. See which functions are compact and which need exponential circuit depth.",
+    to: "/representation",
+  },
+  {
+    eyebrow: "4. Gradients",
+    title: "Two exact quantum gradient methods.",
+    text: "The auxiliary qubit Hadamard test and the parameter-shift rule both give exact gradients — no finite-difference approximations needed.",
+    to: "/gradient",
+  },
+  {
+    eyebrow: "5. QNN Studio",
     title: "Tune thetas and connect them to prediction.",
     text: "Move the trainable angles, inspect exact gradients, and see the readout respond live.",
     to: "/lab",
   },
   {
-    eyebrow: "4. Training",
+    eyebrow: "6. Training",
     title: "Follow parameter-shift updates during learning.",
     text: "See stochastic gradient descent, loss curves, and theta updates as the QNN trains.",
     to: "/training",
   },
   {
-    eyebrow: "5. Tasks",
+    eyebrow: "7. Tasks",
     title: "Compare parity and majority.",
     text: "Interactive comparisons show why representation and optimization difficulty are different.",
     to: "/examples",
   },
   {
-    eyebrow: "6. Insights",
+    eyebrow: "8. Quantum Inputs",
+    title: "What happens when the data itself is quantum?",
+    text: "Superposition batch learning (Section 3.4) and quantum state labeling via a Hamiltonian (Section 3.5) — the case with no classical counterpart.",
+    to: "/quantum-inputs",
+  },
+  {
+    eyebrow: "9. Insights",
     title: "Close with the paper's real takeaways.",
     text: "Summarizes what the QNN can express, what is hard to train, and where the open questions remain.",
     to: "/insights",
@@ -129,15 +152,27 @@ export const exampleData = {
 export const insights = [
   {
     title: "Representation and trainability are different questions",
-    text: "The paper shows that quantum circuits can represent rich Boolean label functions, but finding the right parameters is still an optimization problem with its own bottlenecks.",
+    text: "The paper shows that quantum circuits can represent rich Boolean label functions via the Reed-Muller expansion, but finding the right parameters is still an optimization problem with its own bottlenecks — parity being the clearest example.",
   },
   {
     title: "A dedicated readout qubit makes the model legible",
     text: "By measuring one observable on one chosen qubit, the circuit turns a complex many-qubit state into a classifier output that can be trained against labels.",
   },
   {
+    title: "Gradient computation is exact, not approximate",
+    text: "Both the auxiliary qubit method and the parameter-shift rule give the exact gradient from circuit measurements. No finite-difference approximation is needed, and gradient blow-up cannot occur because all gates are unitary.",
+  },
+  {
+    title: "Quantum batches smooth the optimization landscape",
+    text: "Presenting the full dataset as two superposition states (one per class) and measuring their difference in readout expectation gives the empirical risk in a single shot. The paper found this approach gave more than an order of magnitude improvement in sample complexity.",
+  },
+  {
+    title: "The strongest case for QNNs is quantum input data",
+    text: "When the data is a quantum state with no compact classical description, a classical neural network cannot even read the input. The Hamiltonian sign-labeling experiment (Section 3.5) achieved 97% test accuracy — and this task has no classical counterpart.",
+  },
+  {
     title: "The paper is exploratory, not a proof of quantum advantage",
-    text: "Farhi and Neven demonstrate a workable supervised-learning framework on near-term style circuits, but they do not claim a clear classical advantage at the small sizes they simulate.",
+    text: "Farhi and Neven demonstrate a workable supervised-learning framework on near-term style circuits, but they do not claim a clear classical advantage at the small sizes they simulate. They worked at no more than 17 qubits.",
   },
 ];
 
