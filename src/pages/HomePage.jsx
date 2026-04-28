@@ -10,7 +10,7 @@ export function HomePage() {
             <div className="eyebrow">Interactive paper companion</div>
             <h1>Classification with Quantum Neural Networks on Near Term Processors</h1>
             <p>
-              This project now follows the Farhi-Neven paper more closely: the circuit is interactive, the trainable angles are
+              This project follows the Farhi-Neven paper: the circuit is interactive, the trainable angles are
               explicit, and the training route shows how parameter-shift gradients play the role of the learning signal.
             </p>
             <div className="hero-actions">
